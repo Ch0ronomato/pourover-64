@@ -1,0 +1,9 @@
+.DS_Store
+.libdragon
+libdragon
+build/*.elf
+build/*.o
+build/*.elf*
+build/*.map
+build/*.dfs
+*.z64
