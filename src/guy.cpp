@@ -8,6 +8,7 @@
 // System
 //----------------------------
 #include <malloc.h>
+#include <limits>
 
 //----------------------------
 GuySprite::GuySprite()
@@ -23,4 +24,22 @@ GuySprite::GuySprite()
 sprite_t* GuySprite::GetSprite() const
 {
     return mRawSprite;
+}
+
+//----------------------------
+const int GuySprite::GetCurrentAnimationOffset(uint32_t tick) const
+{
+    if (!isAnimating)
+    {
+        return 0;
+    }
+    else if (tick > mAnimationOffset)
+    {
+        return ((tick - mAnimationOffset) % mFramesCount) * mFramesFiller;
+    }
+    else
+    {
+        uint32_t max = std::numeric_limits<uint32_t>::max();
+        return max - (mAnimationOffset - tick);
+    }
 }

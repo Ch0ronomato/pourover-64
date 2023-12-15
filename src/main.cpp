@@ -4,12 +4,21 @@
 #include <malloc.h>
 #include <string.h>
 #include <stdint.h>
+#include <limits>
 #include <libdragon.h>
 
 static volatile uint32_t animationCounter = 0;
 void update_counter(int overflow)
 {
-    animationCounter++;
+    const uint32_t kMaxTick = std::numeric_limits<uint32_t>::max();
+    if (animationCounter > kMaxTick)
+    {
+        animationCounter = 0;
+    }
+    else
+    {
+        animationCounter++;
+    }
 }
 
 int main()
@@ -39,9 +48,13 @@ int main()
         graphics_fill_screen(disp, 0x00000000);
 
         // Draw first sprite
-        graphics_draw_sprite_stride(disp, 160, 120, guy.GetSprite(), (animationCounter % 8) * 2);
+        graphics_draw_sprite_stride(disp, 160, 120, guy.GetSprite(), guy.GetCurrentAnimationOffset(animationCounter));
 
         // swap bufs
         display_show(disp);
+
+        controller_scan();
+        struct controller_data keys = get_keys_held();
+        guy.Animate(keys.c[0].A);
     }
 }
