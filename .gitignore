@@ -1,5 +1,6 @@
 .DS_Store
 .libdragon
+external/*
 libdragon
 build/*.elf
 build/*.o
