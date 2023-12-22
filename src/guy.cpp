@@ -1,5 +1,5 @@
 // vim: ts=4 sw=4 expandtab
-#include "guy.h"
+#include "guy.hpp"
 
 // N64
 //----------------------------
@@ -7,23 +7,40 @@
 
 // System
 //----------------------------
-#include <malloc.h>
+#include <cstdlib>
 #include <limits>
 
+// External
 //----------------------------
-GuySprite::GuySprite()
+#include <box2d/b2_body.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_polygon_shape.h>
+#include <box2d/b2_world.h>
+
+//----------------------------
+GuySprite::GuySprite(b2World* world)
 {
     // Assumes rdp init
     int fp = dfs_open("/guy.sprite");
     mRawSprite = (sprite_t*)malloc(dfs_size(fp));
     assert(dfs_read(mRawSprite, 1, dfs_size(fp), fp) >= 0);
     assert(dfs_close(fp) == 0);
-}
 
-//----------------------------
-sprite_t* GuySprite::GetSprite() const
-{
-    return mRawSprite;
+    // Setup physics objects
+    b2BodyDef def;
+    def.type = b2_dynamicBody;
+    def.position.Set(160, 120);
+    mBody = world->CreateBody(&def);
+
+    // Setup the polygon shape
+    b2PolygonShape guyBox;
+    guyBox.SetAsBox(32.f, 32.f);
+    
+    b2FixtureDef fixture;
+    fixture.shape = &guyBox;
+    fixture.density = 2.f;
+    fixture.friction = 1.f;
+    mBody->CreateFixture(&fixture);
 }
 
 //----------------------------

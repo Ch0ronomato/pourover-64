@@ -7,4 +7,5 @@ build/*.o
 build/*.elf*
 build/*.map
 build/*.dfs
+build/*.d
 *.z64

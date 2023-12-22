@@ -2,7 +2,7 @@
 
 // Game
 //----------------------------
-#include "guy.h"
+#include "guy.hpp"
 
 // N64
 //----------------------------
@@ -11,10 +11,7 @@
 // Core
 //----------------------------
 #include <limits>
-#include <malloc.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdio.h>
+#include <cstdlib>
 
 // External
 //----------------------------
@@ -66,20 +63,20 @@ int main()
     // as static initalization or else we
     // corrupt the dfs handles; not sure why
     // or now to fix that (maybe just this)
-    b2Vec2 gravity(0.0f, -10.0f);
+    b2Vec2 gravity(0.0f, 10.0f);
     b2World world(gravity);
 
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(80.f, 160.f);
+    groundBodyDef.position.Set(150.f, 200.f);
     b2Body* ground = world.CreateBody(&groundBodyDef);
     b2PolygonShape groundBox;
     
     // This is in meters
-    groundBox.SetAsBox(5.f, 3.f);
+    groundBox.SetAsBox(10.f, 3.f);
     ground->CreateFixture(&groundBox, 0.f);
     
     // read our sprite map
-    GuySprite guy;
+    GuySprite guy(&world);
 
     // Read our ground sprite
     int fp = dfs_open("/test.sprite");
@@ -106,7 +103,7 @@ int main()
         graphics_draw_line(disp, 
                 groundBodyDef.position.x,
                 groundBodyDef.position.y, 
-                groundBodyDef.position.x + 25.f,
+                groundBodyDef.position.x + 100.f,
                 groundBodyDef.position.y,
                 graphics_make_color(255, 0, 0, 255));
 
@@ -120,22 +117,28 @@ int main()
         graphics_draw_line(disp, 
                 groundBodyDef.position.x,
                 groundBodyDef.position.y + 3.f, 
-                groundBodyDef.position.x + 25.f,
+                groundBodyDef.position.x + 100.f,
                 groundBodyDef.position.y + 3.f,
                 graphics_make_color(255, 0, 0, 255));
 
         graphics_draw_line(disp, 
-                groundBodyDef.position.x + 25.f,
+                groundBodyDef.position.x + 100.f,
                 groundBodyDef.position.y, 
-                groundBodyDef.position.x + 25.f,
+                groundBodyDef.position.x + 100.f,
                 groundBodyDef.position.y + 3.f,
                 graphics_make_color(255, 0, 0, 255));
 
-        graphics_draw_sprite_stride(disp, 160, 120, guy.GetSprite(),
+        graphics_draw_sprite_stride(disp, 
+                guy.GetBody()->GetPosition().x,
+                guy.GetBody()->GetPosition().y,
+                guy.GetSprite(),
                 guy.GetCurrentAnimationOffset(animationCounter));
 
         // swap bufs
         display_show(disp);
+
+        // Step the world
+        world.Step(1.f / 60.f, 6, 2); 
 
         // Process controls
         controller_scan();
