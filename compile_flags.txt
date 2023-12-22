@@ -1,0 +1,4 @@
+-std=c++17
+-Iexternal/box2d/include
+-Iexternal/box2d/src
+-I/Users/Ch0ronomato/dev/n64homebrew/libdragon/include
