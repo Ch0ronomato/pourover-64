@@ -27,11 +27,11 @@ sprite_t* GuySprite::GetSprite() const
 }
 
 //----------------------------
-const int GuySprite::GetCurrentAnimationOffset(uint32_t tick) const
+const int GuySprite::GetCurrentAnimationOffset(uint32_t tick)
 {
     if (!isAnimating)
     {
-        return 0;
+        mAnimationOffset = 0;
     }
     else if (tick > mAnimationOffset)
     {
@@ -42,4 +42,5 @@ const int GuySprite::GetCurrentAnimationOffset(uint32_t tick) const
         uint32_t max = std::numeric_limits<uint32_t>::max();
         return max - (mAnimationOffset - tick);
     }
+    return mAnimationOffset;
 }

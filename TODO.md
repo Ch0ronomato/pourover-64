@@ -21,4 +21,4 @@ Okay, for physics there are really two paths.
 1. Write your own
 2. Use a library.
 
-There are libraries, here is one used a lot in game jams
+There are libraries, here is one used a lot in [game jams](https://box2d.org) so I'm going to start with that. 

@@ -2,6 +2,9 @@
 	path = libdragon
 	url = https://github.com/DragonMinded/libdragon
 	branch = trunk
+[submodule "external/box2d"]
+	path = external/box2d
+	url = git@github.com:erincatto/box2d.git
 [submodule "external/box2d-lite"]
 	path = external/box2d-lite
 	url = git@github.com:erincatto/box2d-lite.git
