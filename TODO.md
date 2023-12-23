@@ -1,10 +1,28 @@
+#Week of 2023/12/23
+Okay, we've got some basic stuff setup. The next "big" task is to do some work on 
+2d fluid simulation. Most of this is just somehow implementing [Navier-Stokes](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_equations#:~:text=The%20Navier%E2%80%93Stokes%20equations%20(%2F,and%20mathematician%20George%20Gabriel%20Stokes.) 
+equations. These are just pretty computationally intensive. There are two ways we 
+can go about this, we can go about particle based fluid simulation, or we can do
+the average of neighbors approach. There are two references I've found on
+YouTube for those so far
+1. [Particles](https://youtu.be/rSKMYc1CQHE?si=wc-2geFawf84RUVQ)
+2. [Average of grids](https://youtu.be/qsYE1wMEMPA?si=dsqSyP_B3I5yN6em)
+
+Both of them have a lot of papers referenced in the descriptions which I guess
+we could read? [This
+one](http://graphics.cs.cmu.edu/nsp/course/15-464/Fall09/papers/StamFluidforGames.pdf) was presented at GDC 2004
+
+[ ] Look at [liquidfun](https://google.github.io/liquidfun/)
+[ ] Try to do a simple version yourself of the above paper
+
+===========================================================
+# Week of 2023/12/22
 Making progress here. Still getting some of the basics down.
 
 [x] Do basic drawing
 [x] Animate via sprite map
 [x] Move sprite guy with controller
-[ ] Build a bit collision logic
-[ ] Start the rigid body
+[x] Build a bit collision logic
 
 
 ## Dev progress notes
@@ -22,3 +40,5 @@ Okay, for physics there are really two paths.
 2. Use a library.
 
 There are libraries, here is one used a lot in [game jams](https://box2d.org) so I'm going to start with that. 
+
+===========================================================
